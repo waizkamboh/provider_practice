@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_tutorials/provider/slider_provider.dart';
 
 class SliderExample extends StatefulWidget {
   const SliderExample({super.key});
@@ -8,9 +10,9 @@ class SliderExample extends StatefulWidget {
 }
 
 class _SliderExampleState extends State<SliderExample> {
-  double value = 1.0;
   @override
   Widget build(BuildContext context) {
+    print('Build');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Slider Example'),
@@ -20,39 +22,45 @@ class _SliderExampleState extends State<SliderExample> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Slider(
-              min: 0,
-              max: 1,
-              value: value, onChanged: (val){
-            value = val;
-            setState(() {
+          Consumer<SliderProvider>(builder: (context, value, child){
+            return Slider(
+                min: 0,
+                max: 1,
+                value: value.value, onChanged: (val){
+              print(val.toString());
+              value.setValue(val);
+
 
             });
 
           }),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 100,
-                  decoration:  BoxDecoration(
-                    color: Colors.red.withOpacity(value),
+          Consumer<SliderProvider>(builder: (context, value, child){
+            return Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    decoration:  BoxDecoration(
+                      color: Colors.red.withOpacity(value.value),
+                    ),
+                    child: const Text('Container1'),
                   ),
-                  child: const Text('Container1'),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 100,
-                  decoration:  BoxDecoration(
-                    color: Colors.green.withOpacity(value),
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    decoration:  BoxDecoration(
+                      color: Colors.green.withOpacity(value.value),
+                    ),
+                    child: const Text('Container2'),
                   ),
-                  child: const Text('Container2'),
                 ),
-              ),
 
-            ],
-          )
+              ],
+            );
+
+
+          }),
         ],
       ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_tutorials/provider/count_provider.dart';
+import 'package:provider_tutorials/provider/slider_provider.dart';
 import 'package:provider_tutorials/screen/count_example.dart';
 import 'package:provider_tutorials/screen/slider_example.dart';
 import 'package:provider_tutorials/statefull_widget.dart';
@@ -17,8 +18,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => CountProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CountProvider()),
+        ChangeNotifierProvider(create: (_) => SliderProvider())
+      ],
        child: MaterialApp(
            debugShowCheckedModeBanner: false,
            title: 'Flutter Demo',
